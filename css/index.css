@@ -1,0 +1,63 @@
+@import url("root.css");
+@import url("navigator.css");
+@import url("section.css");
+
+body{
+  display: grid;
+  margin:0;
+  padding:0;
+  color: var(--raisin-black);
+  grid-template-columns: auto;
+  grid-template-rows: 250px auto 150px;
+  grid-template-areas:
+  "hd"
+  "mn"
+  "ft";
+}
+
+.title{
+  font-size: 3em;
+  margin: 20px 0px 20px 0px;
+}
+
+header,footer{
+  background-color: var(--terra-cotta);
+  color: var(--egg-shell);
+}
+
+header{
+  display: flex;
+  flex-direction: column;
+  grid-area: hd;
+  padding: 15px;
+  justify-content: space-around;
+  align-items: center;
+  box-shadow: 0px 5px 18px  var(--egg-shell);
+}
+
+main{
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  grid-area: mn;
+  padding: 50px;
+  min-height: 1000px;
+  background: rgb(129,178,154);
+  background: linear-gradient(0deg, var(--green-sheen) 0%, var(--deep-champagne) 100%);
+}
+
+footer{
+  display: flex;
+  grid-area: ft;
+  box-shadow: 0px -5px 18px  var(--egg-shell);
+  justify-content: center;
+  align-items: center;
+}
+
+/* Small Screens */
+
+@media(max-width: 500px){
+  main{
+    padding: 15px;
+  }
+}

@@ -1,0 +1,93 @@
+section{
+  display: grid;
+  grid-template-columns: 1fr 550px;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+  "hd fg"
+  "tx fg";
+  padding: 15px;
+  height: auto;
+  color: var(--independence);
+  background: var(--light-periwinkle);
+  background: linear-gradient(360deg, rgba(206,207,222,0.25) 0%, rgba(0,0,0,0) 100%);
+}
+
+.section-space{
+  height: 200px;
+}
+
+.section-space-end{
+  height: 1000px;
+}
+
+/*Section Contents*/
+
+section h1{
+  grid-area: hd;
+  font-size: 2em;
+  border-bottom: 6px dashed var(--independence);
+  padding: 5px 0px 5px 0px;
+  width: 50%
+}
+
+.section-text{
+  font-size: large;
+  grid-area: tx;
+}
+
+.section-figure{
+  grid-area: fg;
+  border: 10px solid var(--egg-shell);
+  border-radius: 5px;
+  background-color: var(--egg-shell);
+  padding: 1%;
+  width: 80%;
+  max-width:500px;
+  max-height: 550px;
+  margin: 5%;
+}
+
+.section-figure img{
+  width: 100%;
+  height: 90%;
+}
+
+.section-figure figcaption{
+  padding-top: 5px;
+
+}
+
+/* Medium Screens */
+@media(max-width: 1250px){
+  section{
+    grid-template-columns: 1fr;
+    grid-template-rows: 1fr auto auto ;
+    grid-template-areas:
+    "hd"
+    "tx"
+    "fg";
+  }
+
+}
+
+/*SmaLL Screens*/
+@media(max-width: 500px){
+  section{
+    font-size: small;
+  }
+
+  .section-text{
+    font-size: small;
+    grid-area: tx;
+  }
+
+  .section-figure{
+    margin: 0;
+    border: 1px solid var(--egg-shell);
+    padding: 5px;
+  }
+
+  .section-figure figcaption{
+    padding-top: 1px;
+  }
+}

@@ -1,0 +1,25 @@
+nav{
+  width: 100%;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+/*Navigator Anchors*/
+
+nav a{
+  margin: 5px;
+  padding: 10px;
+  transform: skew(-20deg);
+  border: 1px solid transparent;
+}
+
+nav a h2{
+  margin: 0;
+}
+
+nav a:hover{
+  color: var(--deep-champagne);
+  border: 1px solid var(--deep-champagne);
+  border-radius: 5px;
+}
