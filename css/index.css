@@ -1,18 +1,19 @@
 @import url("root.css");
 @import url("navigator.css");
 @import url("section.css");
+@import url("sectionBar.css");
 
 body{
   display: grid;
   margin:0;
   padding:0;
   color: var(--raisin-black);
-  grid-template-columns: auto;
+  grid-template-columns: auto 10%;
   grid-template-rows: 250px auto 150px;
   grid-template-areas:
-  "hd"
-  "mn"
-  "ft";
+  "hd hd"
+  "mn mn"
+  "ft ft";
 }
 
 .title{
@@ -35,7 +36,7 @@ header{
   box-shadow: 0px 5px 18px  var(--egg-shell);
 }
 
-main{
+body > main{
   display: flex;
   flex-direction: column;
   justify-content: space-evenly;
@@ -45,6 +46,7 @@ main{
   background: rgb(129,178,154);
   background: linear-gradient(0deg, var(--green-sheen) 0%, var(--deep-champagne) 100%);
 }
+
 
 footer{
   display: flex;
@@ -57,7 +59,7 @@ footer{
 /* Small Screens */
 
 @media(max-width: 500px){
-  main{
-    padding: 15px;
+  body > main{
+    padding: 25px;
   }
 }

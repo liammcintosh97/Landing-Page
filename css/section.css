@@ -1,5 +1,16 @@
 section{
   display: grid;
+  column-gap: 50px;
+  grid-template-columns: 1fr auto;
+  grid-template-rows: auto 1fr;
+  grid-template-areas:
+  "sm ss"
+  "sm ss";
+}
+
+section > main{
+  display: grid;
+  grid-area: sm;
   grid-template-columns: 1fr 550px;
   grid-template-rows: auto 1fr;
   grid-template-areas:
@@ -12,7 +23,15 @@ section{
   background: linear-gradient(360deg, rgba(206,207,222,0.25) 0%, rgba(0,0,0,0) 100%);
 }
 
+section > aside{
+  display: flex;
+  grid-area: ss;
+  justify-content: center;
+  align-items: center;
+}
+
 .section-space{
+  padding-left: calc(100% - 10px);
   height: 200px;
 }
 
@@ -54,12 +73,11 @@ section h1{
 
 .section-figure figcaption{
   padding-top: 5px;
-
 }
 
 /* Medium Screens */
 @media(max-width: 1250px){
-  section{
+  section > main {
     grid-template-columns: 1fr;
     grid-template-rows: 1fr auto auto ;
     grid-template-areas:
@@ -70,10 +88,11 @@ section h1{
 
 }
 
-/*SmaLL Screens*/
+/*Small Screens*/
 @media(max-width: 500px){
   section{
     font-size: small;
+    column-gap: 25px;
   }
 
   .section-text{
@@ -89,5 +108,14 @@ section h1{
 
   .section-figure figcaption{
     padding-top: 1px;
+  }
+
+  .section-space{
+    padding-left: calc(100% - 10px);
+    height: 100px;
+  }
+
+  .section-space-end{
+    height: 500px;
   }
 }

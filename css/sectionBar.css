@@ -1,0 +1,27 @@
+.section-bar{
+  border: 5px solid var(--light-periwinkle) ;
+  width: 0px;
+  height: 100%;
+  border-radius: 5px;
+  background-color: var(--light-periwinkle);
+  align-self: flex-start;
+  z-index: 0;
+}
+
+.section-space > .section-bar{
+  height: 110%;
+  z-index: 1;
+}
+
+.section-ball{
+  width: 25px;
+  height: 25px;
+  border: 5px solid var(--light-periwinkle);
+  border-radius: 25px;
+  text-align:center;
+  line-height: 25px;
+  background-color: var(--light-periwinkle) ;
+  color: var(--egg-shell);
+  z-index: 2;
+  position: absolute;
+}
