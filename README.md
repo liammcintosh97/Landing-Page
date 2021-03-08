@@ -12,4 +12,5 @@ KEY FILES
 
   "index.html" - The point of entry for the Landing Page, it contains all of the HTML that lays out the elements of the page
   "app.js" - The main Javascript file that gives the Landing Page its functionality.
-  "section.js" - A Javascript interface that's used to instantiate a section object
+  "section.js" - A Javascript interface that's used to instantiate a section object.
+  "navigator.js" - A Javascript interface that's used to instantiates a navigator object.

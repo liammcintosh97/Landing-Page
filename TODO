@@ -1,0 +1,3 @@
+BUGS
+  - Navigator buttons don't scroll to the correct section
+  - HasActiveSection() function only works on the first section focus

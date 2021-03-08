@@ -1,88 +1,107 @@
 let sections = [];
-let navigator;
 let main;
+let navigator;
 let goBackLink;
 let scrollingTo = -1; //Tracks how the browser is scrolling
-
 
 function Start(){
   //Initializes all the required element variables and event listeners
   main = document.getElementsByTagName("main")[0];
-  navigator = document.getElementsByTagName("nav")[0];
-  goBackLink =  document.getElementsByClassName("go_back")[0];
-  navigator.addEventListener("click",GoToSection);
   window.addEventListener("scroll", OnScroll);
+
+  navigator = new Navigator(GoToSection);
+
+  goBackLink =  document.getElementsByClassName("go_back")[0];
   goBackLink.addEventListener("click",GoToNavigator);
 
+  GetSections();
 }
 
 function GoToNavigator(){
   //Scrolls to the Navigator
-  navigator.scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
+  navigator.content.scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
   scrollingTo = 0;
 }
 
-function GetSections(amount){
+function GetSections(){
+  //Gets all the sections in the document
+  let sectionElements = document.getElementsByTagName("section");
 
-  //Gets the amount the sections in the document as per the passed value
-  for(let i = 0; i < amount; i++){
-      const _sectionNav = navigator.getElementsByClassName(`sec-${i+1}`)[0];
-      const _sectionContent = main.getElementsByClassName(`sec-${i+1}`)[0];
+  //Loops through all the found sections and create a new section object and navigator button
+  for(let i = 0; 1 < sectionElements.length; i++){
+    if(sectionElements[i] === undefined) return
 
-      //Creates a new Section object and stores it in an array
-      sections[i] = new Section(i+1,_sectionNav,_sectionContent,false);
+    const sectionHeader = sectionElements[i].getElementsByTagName("h1")[0];
+    const navItem = navigator.CreateNavItem(sectionHeader.innerText);
+
+    sections[i] = new Section(i+1,navItem,sectionElements[i],false);
   }
 }
 
 function GoToSection(event){
 
-  //Return if the clicked target is NOT a navigator button
-  if(!(event.target.tagName === "A" || event.target.tagName === "H2")){ return;}
+  let navButton = navigator.IsNavButton(event.target);
 
-  let clickedSectionNav = event.target;
-  if(clickedSectionNav.tagName === "H2") clickedSectionNav = clickedSectionNav.parentElement
+  //Return if the clicked target is NOT a navigator button
+  if(!navButton){ console.log("Not a Nav Button"); return;}
 
   //Loop through all the sections and find the linked one. Set the clicked one as active and scroll to it
   for(section of sections){
-    if(section.nav === clickedSectionNav){
-      section.active = true;
+    if(section.nav === navButton){
+      if(!HasActiveSection()) section.SetActive(true);
       section.content.scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
       scrollingTo = section.number;
     }
     else{
-      section.active = false;
+      section.SetActive(false);
     }
-    section.Update();
   }
 }
 
 function OnScroll(){
   //Runs when the user and the system scrolls
+  console.log(scrollingTo);
 
-  if(scrollingTo != 0){
+  if(scrollingTo === -1){
     /*Loops through all the sections and check if they are in the viewport and then sets them as active.
-    only runs when not scrolling to navigator*/
+    only runs when not scrolling to the navigator*/
     for(section of sections){
       if(section.isInViewport()){
-        section.active = true;
+        if(!HasActiveSection()) section.SetActive(true);
         if(section.number === scrollingTo) scrollingTo = -1;
       }
-      else section.active =  false;
-
-      if(scrollingTo === -1) section.Update();
+      else section.SetActive(false);
     }
   }
-  else if(isInViewport(navigator)){ setTimeout(function(){scrollingTo = -1;},500)}
+  else if(isInViewport(navigator.content)){ setTimeout(function(){scrollingTo = -1;},500)}
 }
 
-function isInViewport(_element) {
-  //Checks if the passed element's bounds are within the viewport
-  var contentRect = _element.getBoundingClientRect();
+function isInViewport(el) {
+  //Check if any element in the passed element is in the viewport
 
-   return (
-     contentRect.top >= 0 &&
-     contentRect.left >= 0 &&
-     contentRect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-     contentRect.right <= (window.innerWidth || document.documentElement.clientWidth)
-   );
- }
+  var top = el.offsetTop;
+  var left = el.offsetLeft;
+  var width = el.offsetWidth;
+  var height = el.offsetHeight;
+
+  while(el.offsetParent) {
+    el = el.offsetParent;
+    top += el.offsetTop;
+    left += el.offsetLeft;
+  }
+
+  return (
+    top < (window.pageYOffset + window.innerHeight) &&
+    left < (window.pageXOffset + window.innerWidth) &&
+    (top + height) > window.pageYOffset &&
+    (left + width) > window.pageXOffset
+  );
+}
+
+function HasActiveSection(){
+  for(section of sections){
+    if(section.active) return true
+  }
+
+  return false;
+}

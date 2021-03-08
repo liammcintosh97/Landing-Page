@@ -1,24 +1,34 @@
 nav{
   width: 100%;
+}
+
+.nav-list{
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  padding: 15px 0px 15px 0px;
+  margin: 0px;
+  list-style-type: none;
 }
 
-/*Navigator Anchors*/
+.nav-item{
+  display:inline-block;
+}
 
-nav a{
+/*Navigator items*/
+
+.nav-item{
   margin: 5px;
   padding: 10px;
   transform: skew(-20deg);
   border: 1px solid transparent;
 }
 
-nav a h2{
+.nav-item h2{
   margin: 0;
 }
 
-nav a:hover{
+.nav-item:hover{
   color: var(--deep-champagne);
   border: 1px solid var(--deep-champagne);
   border-radius: 5px;

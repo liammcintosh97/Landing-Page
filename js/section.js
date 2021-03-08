@@ -1,3 +1,5 @@
+const activeClassName = "active"
+
 class Section {
   constructor(_number,_nav, _content,_active) {
     this.nav = _nav;
@@ -5,32 +7,40 @@ class Section {
     this.content = _content;
     this.active = _active;
     this.contentRect = _content.getBoundingClientRect();
-    this.sectionBall = _content.getElementsByClassName("section-ball")[0]
-    this.lightPeriwinkle = window.getComputedStyle(this.content).getPropertyValue("--light-periwinkle");
-    this.independence = window.getComputedStyle(this.content).getPropertyValue("--independence");
-  }
-
-  Update(){
-    //Updates the visuals of the section based on it's state
-    if(this.active === true){
-      this.sectionBall.style.backgroundColor = this.independence;
-      this.sectionBall.style.borderColor = this.independence;
-    }
-    else{
-      this.sectionBall.style.backgroundColor = this.lightPeriwinkle;
-      this.sectionBall.style.borderColor = this.lightPeriwinkle;
-    }
   }
 
   isInViewport() {
-   //Checks if the section is in view
-   var contentRect = this.content.getBoundingClientRect();
+    //Check if any element in the section is in the viewport
+    var el = this.content;
+
+    var top = el.offsetTop;
+    var left = el.offsetLeft;
+    var width = el.offsetWidth;
+    var height = el.offsetHeight;
+
+    while(el.offsetParent) {
+      el = el.offsetParent;
+      top += el.offsetTop;
+      left += el.offsetLeft;
+    }
 
     return (
-      contentRect.top >= 0 &&
-      contentRect.left >= 0 &&
-      contentRect.bottom <= (window.innerHeight || document.documentElement.clientHeight) &&
-      contentRect.right <= (window.innerWidth || document.documentElement.clientWidth)
+      top < (window.pageYOffset + window.innerHeight) &&
+      left < (window.pageXOffset + window.innerWidth) &&
+      (top + height) > window.pageYOffset &&
+      (left + width) > window.pageXOffset
     );
+  }
+
+  SetActive(_active){
+    //Sets the section as active by applying a class. This element is then styled with CSS through this class
+    this.active = _active
+
+    if(_active){
+      this.content.className = activeClassName;
+    }
+    else{
+      this.content.classList.remove(activeClassName);
+    }
   }
 }

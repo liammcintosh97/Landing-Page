@@ -21,6 +21,8 @@ section > main{
   color: var(--independence);
   background: var(--light-periwinkle);
   background: linear-gradient(360deg, rgba(206,207,222,0.25) 0%, rgba(0,0,0,0) 100%);
+  border: 0px solid transparent;
+  border-radius: 5px;
 }
 
 section > aside{
@@ -64,6 +66,7 @@ section h1{
   max-width:500px;
   max-height: 550px;
   margin: 5%;
+  align-items: center;
 }
 
 .section-figure img{
@@ -73,6 +76,10 @@ section h1{
 
 .section-figure figcaption{
   padding-top: 5px;
+}
+
+section.active main{
+  box-shadow: 0px 0px 25px 5px var(--egg-shell);
 }
 
 /* Medium Screens */
