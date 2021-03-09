@@ -47,30 +47,37 @@ function GoToSection(event){
 
   //Loop through all the sections and find the linked one. Set the clicked one as active and scroll to it
   for(section of sections){
+
     if(section.nav === navButton){
-      if(!HasActiveSection()) section.SetActive(true);
+      section.SetActive(true);
       section.content.scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
       scrollingTo = section.number;
     }
-    else{
-      section.SetActive(false);
-    }
+    section.SetActive(false);
   }
 }
 
 function OnScroll(){
   //Runs when the user and the system scrolls
-  console.log(scrollingTo);
+  let activeSection = GetActiveSection();
+
 
   if(scrollingTo === -1){
     /*Loops through all the sections and check if they are in the viewport and then sets them as active.
     only runs when not scrolling to the navigator*/
     for(section of sections){
       if(section.isInViewport()){
-        if(!HasActiveSection()) section.SetActive(true);
-        if(section.number === scrollingTo) scrollingTo = -1;
+        //No active section
+        if(activeSection === null){
+          section.SetActive(true);
+          if(section.number === scrollingTo) scrollingTo = -1;
+        }
+        else if(activeSection != section){ section.SetActive(false); }
       }
-      else section.SetActive(false);
+      //Section is not in the Viewport
+      else{
+        section.SetActive(false);
+      }
     }
   }
   else if(isInViewport(navigator.content)){ setTimeout(function(){scrollingTo = -1;},500)}
@@ -98,10 +105,10 @@ function isInViewport(el) {
   );
 }
 
-function HasActiveSection(){
+function GetActiveSection(){
   for(section of sections){
-    if(section.active) return true
+    if(section.active) return section;
   }
 
-  return false;
+  return null;
 }
