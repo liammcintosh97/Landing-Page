@@ -1,3 +1,5 @@
+const stickyClassName = "sticky"
+
 class Navigator{
   constructor(onClick){
     this.navItems = [];
@@ -9,7 +11,8 @@ class Navigator{
   CreateNavItem(title){
     /*Creates a new navigator button and appends it to the navigator*/
     let navItem = document.createElement("li");
-    navItem.innerHTML = `<li class="nav-item"><a><h2>${title}</h2></a></li>`
+    navItem.innerHTML = `<a><h2>${title}</h2></a>`
+    navItem.className = "nav-item"
 
     this.navItems.push(navItem);
     this.navList.appendChild(navItem);
@@ -24,5 +27,19 @@ class Navigator{
     }
 
     return false;
+  }
+
+  UpdateNavigator(){
+
+    if(window.pageYOffset < 125){
+      this.content.classList.remove(stickyClassName);
+      return
+    }
+
+    if (window.pageYOffset > this.content.offsetTop) {
+      this.content.classList.add(stickyClassName);
+    } else {
+      this.content.classList.remove(stickyClassName);
+    }
   }
 }

@@ -12,14 +12,15 @@ function Start(){
   navigator = new Navigator(GoToSection);
 
   goBackLink =  document.getElementsByClassName("go_back")[0];
-  goBackLink.addEventListener("click",GoToNavigator);
+  goBackLink.addEventListener("click",GoToTitle);
 
   GetSections();
 }
 
-function GoToNavigator(){
+function GoToTitle(){
   //Scrolls to the Navigator
-  navigator.content.scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
+  let title = document.getElementsByClassName("title-container")[0]
+  title.scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
   scrollingTo = 0;
 }
 
@@ -60,7 +61,7 @@ function GoToSection(event){
 function OnScroll(){
   //Runs when the user and the system scrolls
   let activeSection = GetActiveSection();
-
+  navigator.UpdateNavigator();
 
   if(scrollingTo === -1){
     /*Loops through all the sections and check if they are in the viewport and then sets them as active.
