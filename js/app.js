@@ -1,5 +1,6 @@
 let sections = [];
 let main;
+let title;
 let navigator;
 let goBackLink;
 let scrollingTo = -1; //Tracks how the browser is scrolling
@@ -13,13 +14,13 @@ function Start(){
 
   goBackLink =  document.getElementsByClassName("go_back")[0];
   goBackLink.addEventListener("click",GoToTitle);
+  title = document.getElementsByClassName("title-container")[0]
 
   GetSections();
 }
 
 function GoToTitle(){
   //Scrolls to the Navigator
-  let title = document.getElementsByClassName("title-container")[0]
   title.scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
   scrollingTo = 0;
 }
@@ -54,7 +55,9 @@ function GoToSection(event){
       section.content.scrollIntoView({behavior: "smooth", block: "center", inline: "center"});
       scrollingTo = section.number;
     }
-    section.SetActive(false);
+    else{
+      section.SetActive(false);
+    }
   }
 }
 
@@ -63,9 +66,11 @@ function OnScroll(){
   let activeSection = GetActiveSection();
   navigator.UpdateNavigator();
 
+  console.log(scrollingTo);
+
+  //User Scrolling
   if(scrollingTo === -1){
-    /*Loops through all the sections and check if they are in the viewport and then sets them as active.
-    only runs when not scrolling to the navigator*/
+    //Loops through all the sections and check if they are in the viewport and then sets them as active.
     for(section of sections){
       if(section.isInViewport()){
         //No active section
@@ -81,7 +86,18 @@ function OnScroll(){
       }
     }
   }
-  else if(isInViewport(navigator.content)){ setTimeout(function(){scrollingTo = -1;},500)}
+  /*Scrolling to Section*/
+  else if(scrollingTo > 0 ){
+    for(section of sections){
+      if(section.isInViewport()){
+        if(section.number === scrollingTo){ scrollingTo = -1;}
+      }
+    }
+  }
+  /*Scrolling to Title*/
+  else if(scrollingTo === 0){
+    if(isInViewport(title)){ setTimeout(function(){scrollingTo = -1;},500)}
+  }
 }
 
 function isInViewport(el) {

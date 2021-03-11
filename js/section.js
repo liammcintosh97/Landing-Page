@@ -5,6 +5,7 @@ class Section {
     this.nav = _nav;
     this.number = _number;
     this.content = _content;
+    this.headerElement = _content.getElementsByTagName("h1")[0];
     this.active = _active;
     this.contentRect = _content.getBoundingClientRect();
   }
